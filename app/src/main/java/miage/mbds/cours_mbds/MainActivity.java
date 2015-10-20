@@ -1,5 +1,7 @@
 package miage.mbds.cours_mbds;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Uri chemin = Uri.parse("http://www.google.fr");
+        Intent naviguer = new Intent(Intent.ACTION_VIEW, chemin);
+        startActivity(naviguer);
     }
 
     @Override
