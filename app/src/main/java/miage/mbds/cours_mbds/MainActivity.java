@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,9 +31,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Uri chemin = Uri.parse("http://www.google.fr");
-        Intent naviguer = new Intent(Intent.ACTION_VIEW, chemin);
-        startActivity(naviguer);
+        /*___________________________________________________________________________________________________*/
+        /*Bundle params = getIntent().getExtras();
+        String login = params.getString("login");
+        String password = params.getString("password");
+        TextView tvIntent = (TextView)this.findViewById(R.id.textViewIntent);
+        tvIntent.setText(login+" " +password);*/
+        /*___________________________________________________________________________________________________*/
     }
 
     @Override
