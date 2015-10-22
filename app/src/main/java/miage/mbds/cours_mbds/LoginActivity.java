@@ -3,10 +3,7 @@ package miage.mbds.cours_mbds;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-<<<<<<< HEAD
-=======
 import android.content.Intent;
->>>>>>> 32b12d5d98f9e7cb1f08eb93b47dafd0ef77825e
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -86,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.buttonSeConnecter);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,15 +93,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-<<<<<<< HEAD
-=======
 
-        Intent intent = getIntent();
-        String login = intent.getStringExtra("login" );
-        String password = intent.getStringExtra("password");
-        mEmailView.setText(login,true);
-        mPasswordView.setText(password);
->>>>>>> 32b12d5d98f9e7cb1f08eb93b47dafd0ef77825e
+
+
     }
 
     private void populateAutoComplete() {
@@ -152,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in or activityregister the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
@@ -200,16 +191,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            Intent i = new Intent(getApplication(), MainActivity.class);
+            i.putExtra("login", email);
+            i.putExtra("password", password);
+            startActivity(i);
         }
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-<<<<<<< HEAD
         return email.contains("@");
-=======
-        return email.contains("@" );
->>>>>>> 32b12d5d98f9e7cb1f08eb93b47dafd0ef77825e
     }
 
     private boolean isPasswordValid(String password) {
@@ -267,11 +258,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 // Show primary email addresses first. Note that there won't be
                 // a primary email address if the user hasn't specified one.
-<<<<<<< HEAD
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-=======
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC" );
->>>>>>> 32b12d5d98f9e7cb1f08eb93b47dafd0ef77825e
     }
 
     @Override
@@ -337,18 +324,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             for (String credential : DUMMY_CREDENTIALS) {
-<<<<<<< HEAD
                 String[] pieces = credential.split(":");
-=======
-                String[] pieces = credential.split(":" );
->>>>>>> 32b12d5d98f9e7cb1f08eb93b47dafd0ef77825e
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
             }
 
-            // TODO: register the new account here.
+            // TODO: activityregister the new account here.
             return true;
         }
 

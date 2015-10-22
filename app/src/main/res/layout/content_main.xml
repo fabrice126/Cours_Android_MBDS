@@ -9,47 +9,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <TextView android:text="Hello World!" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_marginTop="46dp"
-        android:src="@drawable/logo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenue"
-        android:id="@+id/textView"
-        android:textSize="40dp"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Veuillez sélectionner &quot;s&apos;enregistrer&quot; pour créer un compte ou &quot;se connecter&quot; si vous en avez déjà un."
-        android:id="@+id/textView2"
-        android:textSize="15dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="S&apos;enregistrer"
-        android:id="@+id/button"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Se connecter"
-        android:id="@+id/button2"
-        android:layout_below="@+id/button"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/textViewIntent" />
 </RelativeLayout>

@@ -1,18 +1,17 @@
 package miage.mbds.cours_mbds;
 
 import android.content.Intent;
-<<<<<<< HEAD
 import android.net.Uri;
-=======
->>>>>>> 32b12d5d98f9e7cb1f08eb93b47dafd0ef77825e
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,16 +31,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
-        Uri chemin = Uri.parse("http://www.google.fr");
-        Intent naviguer = new Intent(Intent.ACTION_VIEW, chemin);
-        startActivity(naviguer);
-=======
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("login", "Thibaut" );
-        intent.putExtra("password", "pass" );
-        startActivity(intent);
->>>>>>> 32b12d5d98f9e7cb1f08eb93b47dafd0ef77825e
+        /*___________________________________________________________________________________________________*/
+        /*Bundle params = getIntent().getExtras();
+        String login = params.getString("login");
+        String password = params.getString("password");
+        TextView tvIntent = (TextView)this.findViewById(R.id.textViewIntent);
+        tvIntent.setText(login+" " +password);*/
+        /*___________________________________________________________________________________________________*/
     }
 
     @Override
