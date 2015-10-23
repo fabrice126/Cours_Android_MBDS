@@ -9,7 +9,55 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
-    <TextView android:text="Hello World!" android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewIntent" />
+        android:text="Bienvenue"
+        android:id="@+id/textView"
+        android:textSize="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/logo"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Veuillez sélectionner &quot;s&apos;enregistrer&quot; pour créer un compte ou &quot;se connecter&quot; si vous en avez déjà un."
+            android:id="@+id/textView2"
+            android:textSize="15dp"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="center" />
+    
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S&apos;enregistrer"
+            android:id="@+id/buttonRegister"
+            android:background="@drawable/button_radius"
+            android:textColor="#ffffff"
+            android:layout_marginTop="77dp"
+            android:layout_below="@+id/imageView"
+            android:layout_alignStart="@+id/buttonLogin"
+            android:layout_alignEnd="@+id/buttonLogin" />
+    
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Se connecter"
+            android:id="@+id/buttonLogin"
+            android:background="@drawable/button_radius"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/buttonRegister"
+            android:layout_marginTop="32dp"
+            android:layout_alignEnd="@+id/textView"
+            android:layout_alignStart="@+id/textView" />
 </RelativeLayout>

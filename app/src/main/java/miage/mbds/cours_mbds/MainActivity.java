@@ -10,11 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Button buttonRegister;
+    private Button buttonLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tvIntent = (TextView)this.findViewById(R.id.textViewIntent);
         tvIntent.setText(login+" " +password);*/
         /*___________________________________________________________________________________________________*/
+        buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        buttonRegister.setOnClickListener(this);
+        buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        buttonLogin.setOnClickListener(this);
     }
 
     @Override
@@ -61,4 +68,21 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.buttonRegister:
+                startActivity(new Intent(this, RegisterActivity.class));
+
+                break;
+            case R.id.buttonLogin:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+        }
+
+    }
+
 }
+
