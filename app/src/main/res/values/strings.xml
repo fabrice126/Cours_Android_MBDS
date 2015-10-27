@@ -17,4 +17,5 @@
     </string>
     <string name="title_activity_enregister">S\'enregistrer</string>
     <string name="title_activity_home">Accueil</string>
+    <string name="title_activity_test_relative_layout">testRelativeLayout</string>
 </resources>
