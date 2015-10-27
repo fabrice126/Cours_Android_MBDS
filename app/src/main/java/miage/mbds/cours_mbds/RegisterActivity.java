@@ -2,12 +2,9 @@ package miage.mbds.cours_mbds;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -15,10 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+import com.androidquery.callback.Transformer;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     View focusViewMail = null;
     View focusViewPortable = null;
     View focusViewConfirmeMotDePasse = null;
+    private AQuery aq;
+    private String url = "http://92.243.14.22/person/";
 
 
 
@@ -59,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupSexe);
         buttonSenregistrer = (Button) findViewById(R.id.buttonSenregistrer);
         buttonSenregistrer.setOnClickListener(this);
+        aq = new AQuery(this);
     }
 
 
@@ -122,6 +131,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 }
                 else{
+                    //post_register();
+                    async_transformer();
                     //Afficher les croix rouges a coté des elements causant l'erreur
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 }
@@ -142,13 +153,67 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return false;
     }
 
+    public void post_register() {
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("nom",editTextNom.getText().toString());
+        params.put("prenom",editTextPrenom.getText().toString());
+        params.put("telephone",editTextTelephonePortable.getText().toString());
+        params.put("email",editTextEmail.getText().toString());
+        params.put("createdby","Linares");
+        params.put("password",editTextMotDePasse.getText().toString());
+        params.put("sexe",radioSexButton.getText().toString());
 
 
+        aq.ajax(url, params, JSONObject.class, new AjaxCallback<JSONObject>() {
+            @Override
+            public void callback(String urlPost, JSONObject json, AjaxStatus status) {
+                System.out.println("Réponse = " + json);
+                try {
+                    Log.d("Réponse", (String) json.get("nom"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
+    public void async_transformer(){
 
+        String url = "http://92.243.14.22/person/";
+        GsonTransformer t = new GsonTransformer();
 
+        aq.transformer(t).ajax(url, Profil.class, new AjaxCallback<Profil>() {
+            public void callback(String url, Profil profil, AjaxStatus status) {
+                Gson gson = new Gson();
+                Log.d("Réponse", gson.toJson(profil));
+            }
+        });
 
+    }
 
+    private static class GsonTransformer implements Transformer {
 
+        public <T> T transform(String url, Class<T> type, String encoding, byte[] data, AjaxStatus status) {
+            Gson g = new Gson();
+            return g.fromJson(new String(data), type);
+        }
+    }
+
+    private static class Profil {
+
+        public String prenom;
+        public String nom;
+        public String sexe;
+        public String telephone;
+        public String email;
+        public String createdby;
+        public String password;
+        public String connected;
+        public String createdAt;
+        public String updatedAt;
+        public String id;
+
+    }
 
 }
