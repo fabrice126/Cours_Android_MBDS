@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:state_pressed="true">
+    <shape android:shape="oval">
+        <solid android:color="#ff992f2f" />
+        <stroke android:width="@dimen/widthStrokeContactShape" android:color="@android:color/holo_purple" />
+        <corners android:radius="@dimen/radiusContactShape" />
+        <padding android:left="@dimen/paddingRightLeftTopBotContactShape" android:top="@dimen/paddingRightLeftTopBotContactShape" android:right="@dimen/paddingRightLeftTopBotContactShape" android:bottom="@dimen/paddingRightLeftTopBotContactShape" />
+        <size android:height="@dimen/sizeHeightWidthContactShape" android:width="@dimen/sizeHeightWidthContactShape" />
+    </shape>
+</item>
+<item>
+    <shape android:shape="oval">
+        <stroke android:width="@dimen/widthStrokeContactShape" android:color="@android:color/holo_purple" />
+        <solid android:color="@android:color/black" />
+        <corners android:radius="@dimen/radiusContactShape" />
+        <size android:height="@dimen/sizeHeightWidthContactShape" android:width="@dimen/sizeHeightWidthContactShape" />
+    </shape>
+</item>
+</selector>
