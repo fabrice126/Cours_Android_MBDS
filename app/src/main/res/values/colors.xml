@@ -5,7 +5,4 @@
     <color name="colorAccent">#e7b936</color>
     <color name="textColorHint">@android:color/darker_gray</color>
     <color name="textColorPrimary">#2d68fe</color>
-
-
-
 </resources>
