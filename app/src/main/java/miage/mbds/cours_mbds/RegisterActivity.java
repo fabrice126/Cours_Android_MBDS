@@ -146,8 +146,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     public void async_transformer(){
 
-        String url = "http://92.243.14.22/person/";
-
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("nom",editTextNom.getText().toString());
         params.put("prenom",editTextPrenom.getText().toString());
@@ -158,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.put("sexe", radioSexButton.getText().toString());
 
         EchangeServeur e = new EchangeServeur();
-        e.async_transformer(url, params, aq);
+        e.async_register(params, aq);
 
         /*aq.transformer(t).ajax(url, params, Profil.class, new AjaxCallback<Profil>() {
             public void callback(String url, Profil profil, AjaxStatus status) {

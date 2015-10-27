@@ -184,7 +184,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
-            Log.d("Fabrice", "pd");
             post_login(email, password);
             Intent i = new Intent(getApplication(), HomeActivity.class);
             i.putExtra("login", email);
@@ -298,10 +297,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("email",email);
         params.put("password",password);
-        String url = "http://92.243.14.22/person/login";
 
         EchangeServeur e = new EchangeServeur();
-        e.async_transformer(url, params, aq);
+        e.async_login(params, aq);
 
         /*
         GsonTransformer t = new GsonTransformer();
