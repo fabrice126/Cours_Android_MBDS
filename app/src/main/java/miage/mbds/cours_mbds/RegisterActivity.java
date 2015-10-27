@@ -1,23 +1,29 @@
 package miage.mbds.cours_mbds;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -32,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String editTextMotDePasseConfirme;
     Button buttonSenregistrer;
     ArrayList<String> alInputRegister;
+    private AQuery aq;
+    private String url = "http://92.243.14.22/person/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupSexe);
         buttonSenregistrer = (Button) findViewById(R.id.buttonSenregistrer);
         buttonSenregistrer.setOnClickListener(this);
+        
     }
 
 
