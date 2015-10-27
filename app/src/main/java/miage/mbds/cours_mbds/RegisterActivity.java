@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +13,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-import com.androidquery.callback.Transformer;
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +37,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     View focusViewPortable = null;
     View focusViewConfirmeMotDePasse = null;
     private AQuery aq;
-    private String url = "http://92.243.14.22/person/";
 
 
 
@@ -153,7 +144,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return false;
     }
 
-    public void post_register() {
+    public void async_transformer(){
+
+        String url = "http://92.243.14.22/person/";
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("nom",editTextNom.getText().toString());
@@ -162,58 +155,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.put("email",editTextEmail.getText().toString());
         params.put("createdby","Linares");
         params.put("password",editTextMotDePasse.getText().toString());
-        params.put("sexe",radioSexButton.getText().toString());
+        params.put("sexe", radioSexButton.getText().toString());
 
+        EchangeServeur e = new EchangeServeur();
+        e.async_transformer(url, params, aq);
 
-        aq.ajax(url, params, JSONObject.class, new AjaxCallback<JSONObject>() {
-            @Override
-            public void callback(String urlPost, JSONObject json, AjaxStatus status) {
-                System.out.println("Réponse = " + json);
-                try {
-                    Log.d("Réponse", (String) json.get("nom"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void async_transformer(){
-
-        String url = "http://92.243.14.22/person/";
-        GsonTransformer t = new GsonTransformer();
-
-        aq.transformer(t).ajax(url, Profil.class, new AjaxCallback<Profil>() {
+        /*aq.transformer(t).ajax(url, params, Profil.class, new AjaxCallback<Profil>() {
             public void callback(String url, Profil profil, AjaxStatus status) {
                 Gson gson = new Gson();
+
                 Log.d("Réponse", gson.toJson(profil));
+                Log.d("Nom du mec", profil.nom);
             }
-        });
+        });*/
 
     }
 
-    private static class GsonTransformer implements Transformer {
-
-        public <T> T transform(String url, Class<T> type, String encoding, byte[] data, AjaxStatus status) {
-            Gson g = new Gson();
-            return g.fromJson(new String(data), type);
-        }
-    }
-
-    private static class Profil {
-
-        public String prenom;
-        public String nom;
-        public String sexe;
-        public String telephone;
-        public String email;
-        public String createdby;
-        public String password;
-        public String connected;
-        public String createdAt;
-        public String updatedAt;
-        public String id;
-
-    }
 
 }
