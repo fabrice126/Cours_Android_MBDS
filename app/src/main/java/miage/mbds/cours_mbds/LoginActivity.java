@@ -17,7 +17,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +26,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
@@ -40,7 +40,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, ResultCallBack  {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private AQuery aq;
+    private EchangeServeur e;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,10 +186,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
             post_login(email, password);
-            Intent i = new Intent(getApplication(), HomeActivity.class);
-            i.putExtra("login", email);
-            i.putExtra("password", password);
-            startActivity(i);
+//            if(result.success) {
+//                Intent i = new Intent(getApplication(), HomeActivity.class);
+//                i.putExtra("prenom", result.profil.prenom);
+//                i.putExtra("nom", result.profil.nom);
+//                startActivity(i);
+//            }
+//            else {
+//                Toast.makeText(this,"Mauvais identifiants",Toast.LENGTH_LONG).show();
+//            }
         }
     }
 
@@ -272,6 +278,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
+    @Override
+    public void ResultCallBack() {
+        if(e.getResultat().success) {
+            Intent i = new Intent(getApplication(), HomeActivity.class);
+            i.putExtra("prenom", e.getResultat().profil.prenom);
+            i.putExtra("nom", e.getResultat().profil.nom);
+            startActivity(i);
+        }
+        else {
+            Intent i = new Intent(getApplication(), LoginActivity.class);
+            startActivity(i);
+            Toast.makeText(this, "Identifiants incorrect", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -296,10 +318,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("email",email);
-        params.put("password",password);
+        params.put("password", password);
 
-        EchangeServeur e = new EchangeServeur();
-        e.async_login(params, aq);
+        e = new EchangeServeur();
+        e.async_login(params, aq, this);
 
         /*
         GsonTransformer t = new GsonTransformer();

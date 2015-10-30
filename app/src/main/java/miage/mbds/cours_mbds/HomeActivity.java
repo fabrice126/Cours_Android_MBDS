@@ -6,15 +6,26 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
 
+    TextView tvWelcome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle params = getIntent().getExtras();
+        String nomExtra = params.getString("nom");
+        String prenomExtra = params.getString("prenom");
+
+        /*___________________________________________________________________________________________________*/
+
+        tvWelcome = (TextView) findViewById(R.id.welcome);
+        tvWelcome.setText("Bienvenue Monsieur " + nomExtra + " " + prenomExtra);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
