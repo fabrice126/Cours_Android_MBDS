@@ -7,10 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.androidquery.AQuery;
 
@@ -33,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText editTextMotDePasseConfirme;
     Button buttonSenregistrer;
     ArrayList<String> alInputRegister;
+    Spinner spinnerCountry;
     View focusViewMail = null;
     View focusViewPortable = null;
     View focusViewConfirmeMotDePasse = null;
@@ -54,6 +57,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextMotDePasse = (EditText)findViewById(R.id.editTextMotDePasse);
         editTextMotDePasseConfirme = (EditText)findViewById(R.id.editTextMotDePasseConfirme);
+
+
+        //Récupérer la liste dans les ressources
+        String [] countries = getResources().getStringArray(R.array.country_arrays);
+        //Instance de la vue de groupe
+        spinnerCountry = (Spinner) findViewById(R.id.spinnerCountry);
+        //Créer l'adapteur
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, countries);
+        //Associer l'adapteur à l'instance de la vue de groupe
+        spinnerCountry.setAdapter(dataAdapter);
+
+
+
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupSexe);
         buttonSenregistrer = (Button) findViewById(R.id.buttonSenregistrer);
@@ -154,10 +170,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.put("createdby","Linares");
         params.put("password",editTextMotDePasse.getText().toString());
         params.put("sexe", radioSexButton.getText().toString());
-
+        params.put("pays",spinnerCountry.getSelectedItem().toString());
         EchangeServeur e = new EchangeServeur();
         e.async_register(params, aq);
-
+        //a supprimer
         /*aq.transformer(t).ajax(url, params, Profil.class, new AjaxCallback<Profil>() {
             public void callback(String url, Profil profil, AjaxStatus status) {
                 Gson gson = new Gson();

@@ -64,6 +64,11 @@
                     android:drawablePadding="@dimen/drawable_padding" />
                 </android.support.design.widget.TextInputLayout>
 
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerCountry" />
+
                 <RadioGroup
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"

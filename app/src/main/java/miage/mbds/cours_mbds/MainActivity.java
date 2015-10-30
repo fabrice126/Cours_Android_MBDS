@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button buttonRegister;
     private Button buttonLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        /*___________________________________________________________________________________________________*/
-        /*Bundle params = getIntent().getExtras();
-        String login = params.getString("login");
-        String password = params.getString("password");
-        TextView tvIntent = (TextView)this.findViewById(R.id.textViewIntent);
-        tvIntent.setText(login+" " +password);*/
-        /*___________________________________________________________________________________________________*/
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(this);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);

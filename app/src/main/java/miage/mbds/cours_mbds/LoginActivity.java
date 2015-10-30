@@ -27,6 +27,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private AQuery aq;
+    private EchangeServeur e;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,10 +187,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
             post_login(email, password);
-            Intent i = new Intent(getApplication(), HomeActivity.class);
-            i.putExtra("login", email);
-            i.putExtra("password", password);
-            startActivity(i);
+
+
+            /*try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
+            if(e.getResult().success){
+                Intent i = new Intent(getApplication(), HomeActivity.class);
+                i.putExtra("nom", e.getResult().profil.nom);
+                //a supprimer
+                //Log.d("test e.getResult().profil.nom = ", e.getResult().profil.nom);
+                i.putExtra("prenom", e.getResult().profil.prenom);
+                //a supprimer
+                // Log.d("test e.getResult().profil.prenom = ", e.getResult().profil.prenom);
+
+                startActivity(i);
+            }
+            else{
+                Toast.makeText(this,"Mauvais mot de passe",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -296,22 +315,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("email",email);
-        params.put("password",password);
+        params.put("password", password);
 
-        EchangeServeur e = new EchangeServeur();
+        e = new EchangeServeur();
+
         e.async_login(params, aq);
 
-        /*
-        GsonTransformer t = new GsonTransformer();
-
-        aq.transformer(t).ajax(url, params, Profil.class, new AjaxCallback<Profil>() {
-            public void callback(String url, Profil profil, AjaxStatus status) {
-                Gson gson = new Gson();
-
-                Log.d("Réponse", gson.toJson(profil));
-                Log.d("Nom du mec", profil.nom);
-            }
-        });*/
     }
 }
 
