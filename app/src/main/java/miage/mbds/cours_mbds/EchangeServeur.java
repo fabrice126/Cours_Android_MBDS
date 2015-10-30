@@ -14,9 +14,22 @@ import java.util.Map;
 /**
  * Created by user on 27/10/2015.
  */
-public class EchangeServeur {
+public class EchangeServeur{
 
-    private static class Profil {
+    private ResultCallBack listener;
+    private Result resultat;
+
+    public static class Result {
+
+        @SerializedName("user")
+        public Profil profil;
+        @SerializedName("success")
+        public boolean success;
+        @SerializedName("message")
+        public boolean message;
+    }
+
+    public static class Profil {
 
         public String prenom;
         public String nom;
@@ -32,16 +45,6 @@ public class EchangeServeur {
 
     }
 
-
-    private static class Result {
-
-        @SerializedName("user")
-        public Profil profil;
-        @SerializedName("success")
-        public boolean success;
-
-    }
-
     private static class GsonTransformer implements Transformer {
 
         public <T> T transform(String url, Class<T> type, String encoding, byte[] data, AjaxStatus status) {
@@ -50,17 +53,19 @@ public class EchangeServeur {
         }
     }
 
-    public void async_login(Map<String, Object> params, AQuery aq){
+    public void async_login(Map<String, Object> params, AQuery aq, final ResultCallBack listener){
 
+        this.listener = listener;
         GsonTransformer t = new GsonTransformer();
         String url = "http://92.243.14.22/person/login";
 
         Log.d("!!!!!!", params.toString());
-        aq.transformer(t).ajax(url, params, Result.class, new AjaxCallback<Result>() {
+        aq.transformer(t).progress(this).ajax(url, params, Result.class, new AjaxCallback<Result>() {
             public void callback(String url, Result result, AjaxStatus status) {
                 Gson gson = new Gson();
                 Log.d("Réponse", gson.toJson(result));
-                Log.d("Nom du mec", result.profil.nom);
+                resultat = result;
+                listener.ResultCallBack();
             }
         });
 
@@ -80,5 +85,13 @@ public class EchangeServeur {
             }
         });
 
+    }
+
+    public Result getResultat() {
+        return resultat;
+    }
+
+    public void setResultat(Result resultat) {
+        this.resultat = resultat;
     }
 }
