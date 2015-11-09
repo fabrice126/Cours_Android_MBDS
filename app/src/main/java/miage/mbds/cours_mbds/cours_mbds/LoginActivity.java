@@ -1,4 +1,4 @@
-package miage.mbds.cours_mbds;
+package miage.mbds.cours_mbds.cours_mbds;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -35,12 +35,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import miage.mbds.cours_mbds.R;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, ResultCallBack  {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, ResultCallBack {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -112,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                    .setAction(android.R.string.ok, new OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
                         public void onClick(View v) {
@@ -186,39 +188,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
             post_login(email, password);
-<<<<<<< HEAD
-
-
-            /*try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-            if(e.getResult().success){
-                Intent i = new Intent(getApplication(), HomeActivity.class);
-                i.putExtra("nom", e.getResult().profil.nom);
-                //a supprimer
-                //Log.d("test e.getResult().profil.nom = ", e.getResult().profil.nom);
-                i.putExtra("prenom", e.getResult().profil.prenom);
-                //a supprimer
-                // Log.d("test e.getResult().profil.prenom = ", e.getResult().profil.prenom);
-
-                startActivity(i);
-            }
-            else{
-                Toast.makeText(this,"Mauvais mot de passe",Toast.LENGTH_LONG).show();
-            }
-=======
-//            if(result.success) {
-//                Intent i = new Intent(getApplication(), HomeActivity.class);
-//                i.putExtra("prenom", result.profil.prenom);
-//                i.putExtra("nom", result.profil.nom);
-//                startActivity(i);
-//            }
-//            else {
-//                Toast.makeText(this,"Mauvais identifiants",Toast.LENGTH_LONG).show();
-//            }
->>>>>>> 4735c5c062ca702574e23ca8f2e9790bbd10ede4
         }
     }
 
@@ -345,16 +314,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         params.put("password", password);
 
         e = new EchangeServeur();
-<<<<<<< HEAD
-=======
+
         e.async_login(params, aq, this);
-
-        /*
-        GsonTransformer t = new GsonTransformer();
->>>>>>> 4735c5c062ca702574e23ca8f2e9790bbd10ede4
-
-        e.async_login(params, aq);
-
     }
 }
 

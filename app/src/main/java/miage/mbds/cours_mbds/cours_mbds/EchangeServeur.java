@@ -1,4 +1,4 @@
-package miage.mbds.cours_mbds;
+package miage.mbds.cours_mbds.cours_mbds;
 
 import android.util.Log;
 
