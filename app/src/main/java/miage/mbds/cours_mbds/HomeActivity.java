@@ -8,8 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-
-<<<<<<< HEAD:app/src/main/java/miage/mbds/cours_mbds/cours_mbds/HomeActivity.java
 import com.androidquery.AQuery;
 
 import java.util.List;
@@ -18,9 +16,6 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
 
     private AQuery aq;
     private EchangeServeur e;
-=======
-public class HomeActivity extends AppCompatActivity {
->>>>>>> parent of 1c8d514... commit de merge:app/src/main/java/miage/mbds/cours_mbds/HomeActivity.java
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

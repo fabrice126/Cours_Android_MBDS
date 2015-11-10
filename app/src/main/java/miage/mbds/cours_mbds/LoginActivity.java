@@ -186,43 +186,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
             post_login(email, password);
-<<<<<<< HEAD:app/src/main/java/miage/mbds/cours_mbds/cours_mbds/LoginActivity.java
 
-=======
-<<<<<<< HEAD
-
-
-            /*try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-            if(e.getResult().success){
-                Intent i = new Intent(getApplication(), HomeActivity.class);
-                i.putExtra("nom", e.getResult().profil.nom);
-                //a supprimer
-                //Log.d("test e.getResult().profil.nom = ", e.getResult().profil.nom);
-                i.putExtra("prenom", e.getResult().profil.prenom);
-                //a supprimer
-                // Log.d("test e.getResult().profil.prenom = ", e.getResult().profil.prenom);
-
-                startActivity(i);
-            }
-            else{
-                Toast.makeText(this,"Mauvais mot de passe",Toast.LENGTH_LONG).show();
-            }
-=======
-//            if(result.success) {
-//                Intent i = new Intent(getApplication(), HomeActivity.class);
-//                i.putExtra("prenom", result.profil.prenom);
-//                i.putExtra("nom", result.profil.nom);
-//                startActivity(i);
-//            }
-//            else {
-//                Toast.makeText(this,"Mauvais identifiants",Toast.LENGTH_LONG).show();
-//            }
->>>>>>> 4735c5c062ca702574e23ca8f2e9790bbd10ede4
->>>>>>> parent of 1c8d514... commit de merge:app/src/main/java/miage/mbds/cours_mbds/LoginActivity.java
         }
     }
 
@@ -345,25 +309,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void post_login(String email, String password) {
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("email",email);
+        params.put("email", email);
         params.put("password", password);
 
         e = new EchangeServeur();
-<<<<<<< HEAD:app/src/main/java/miage/mbds/cours_mbds/cours_mbds/LoginActivity.java
         e.async_login(params, aq, this);
-
-=======
-<<<<<<< HEAD
-=======
-        e.async_login(params, aq, this);
-
         /*
         GsonTransformer t = new GsonTransformer();
 >>>>>>> 4735c5c062ca702574e23ca8f2e9790bbd10ede4
 
         e.async_login(params, aq);
-
->>>>>>> parent of 1c8d514... commit de merge:app/src/main/java/miage/mbds/cours_mbds/LoginActivity.java
+*/
     }
 }
 
