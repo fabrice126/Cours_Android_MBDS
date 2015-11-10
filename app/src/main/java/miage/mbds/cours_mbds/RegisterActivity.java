@@ -1,4 +1,4 @@
-package miage.mbds.cours_mbds.cours_mbds;
+package miage.mbds.cours_mbds;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import miage.mbds.cours_mbds.R;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 

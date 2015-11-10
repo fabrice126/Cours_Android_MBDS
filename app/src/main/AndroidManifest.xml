@@ -29,7 +29,7 @@
             android:label="@string/title_activity_login" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="miage.mbds.cours_mbds.cours_mbds.MainActivity" />
+                android:value="miage.mbds.cours_mbds.MainActivity" />
         </activity>
         <activity
             android:name=".RegisterActivity"
