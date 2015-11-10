@@ -7,14 +7,11 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.androidquery.callback.Transformer;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 
-import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +23,7 @@ public class EchangeServeur{
 
     private ResultCallBack listener;
     private Result resultat;
-    private List<Person> person = new ArrayList<>();
+    private List<Person> persons = new ArrayList<>();
 
     public static class Result {
 
@@ -51,7 +48,6 @@ public class EchangeServeur{
         public String createdAt;
         public String updatedAt;
         public String id;
-
     }
 
     private static class GsonTransformer implements Transformer {
@@ -96,8 +92,9 @@ public class EchangeServeur{
 
     }
 
-    public void async_list(AQuery aq){
+    public void async_list(AQuery aq, final ResultCallBack listener){
 
+        this.listener = listener;
         GsonTransformer t = new GsonTransformer();
         String url = "http://92.243.14.22/person/";
 
@@ -105,37 +102,23 @@ public class EchangeServeur{
             @Override
             public void callback(String url, JSONArray json, AjaxStatus status) {
                 Gson gson = new Gson();
-                person = getListObjectFromJson(json.toString(), new TypeToken<ArrayList<Person>>() {}.getType());
-                Log.d("Réponse", ""+person.get(0).prenom);
+                persons = gson.fromJson(json.toString(), new TypeToken<ArrayList<Person>>() {
+                }.getType());
+                Log.d("Taille", "" + persons.size());
+                for(int i = 0; i<persons.size();i++) {
+                    Log.d("Réponse", "" + persons.get(i).prenom);
+                }
+                listener.ResultCallBack();
             }
         });
-
     }
-
 
     public Result getResultat() {
         return resultat;
     }
 
-    public List<Person> getPerson() {
-        return person;
-    }
-
-    public static <T> ArrayList<T> getListObjectFromJson(String theJsonObject, Type typeOfTheList) {
-        try {
-            GsonBuilder gsonb = new GsonBuilder();
-            Gson gson = gsonb
-                    .excludeFieldsWithoutExposeAnnotation()
-                    .setDateFormat(DateFormat.LONG)
-                    .create();
-            JSONArray jsonObject = new JSONArray(theJsonObject);
-            ArrayList<T> res = gson.fromJson(jsonObject.toString(), typeOfTheList);
-            Log.v("Return", res.toString() + " " + res.toString());
-            return res;
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            return null;
-        }
+    public List<Person> getPersons() {
+        return persons;
     }
 
 }

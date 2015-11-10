@@ -14,21 +14,21 @@ import java.util.List;
 public class PersonItemAdapter extends BaseAdapter {
 
         private Context context;
-        public List<EchangeServeur.Person> person;
+        public List<EchangeServeur.Person> persons;
 
-        public PersonItemAdapter(Context context, List<EchangeServeur.Person> person) {
+        public PersonItemAdapter(Context context, List<EchangeServeur.Person> persons) {
             this.context = context;
-            this.person = person;
+            this.persons = persons;
         }
 
         @Override
         public int getCount() {
-            return person.size();
+            return persons.size();
         }
 
         @Override
         public Object getItem(int arg0) {
-            return person.get(arg0);
+            return persons.get(arg0);
         }
 
         @Override
@@ -42,25 +42,25 @@ public class PersonItemAdapter extends BaseAdapter {
             View v = convertView;
 
             PersonViewHolder viewHolder = null;
-//            if(v==null){
-//                v = View.inflate(context, R.layout.list_person, null);
-//                viewHolder = new CommentListViewHolder();
-//                viewHolder.nom_prenom= (TextView)v.findViewById(R.id.txt_nom_prenom);
-//                viewHolder.date_creation= (TextView)v.findViewById(R.id.txt_date_inscription);
-//                v.setTag(viewHolder);
-//            }
-//            else{
-//                viewHolder = (CommentListViewHolder) v.getTag();
-//            }
-//            EchangeServeur.Person person = person.get(position);
-//            viewHolder.nom_prenom.setText(comment.getComment_body_value());
-//            viewHolder.date_creation.setText(comment.getName());
+            if(v==null){
+                v = View.inflate(context, R.layout.content_list_contact, null);
+                viewHolder = new PersonViewHolder();
+                viewHolder.nom_prenom= (TextView)v.findViewById(R.id.nom);
+                viewHolder.connected= (TextView)v.findViewById(R.id.connected);
+                v.setTag(viewHolder);
+            }
+            else{
+                viewHolder = (PersonViewHolder) v.getTag();
+            }
+            EchangeServeur.Person person = persons.get(position);
+            viewHolder.nom_prenom.setText(person.prenom+" "+person.nom);
+            viewHolder.connected.setText(person.connected);
             return v;
         }
 
         class PersonViewHolder{
             TextView nom_prenom;
-            TextView date_creation;
+            TextView connected;
         }
 
     }

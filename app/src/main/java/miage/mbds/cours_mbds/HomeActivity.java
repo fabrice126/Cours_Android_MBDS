@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
 
         aq = new AQuery(this);
         e = new EchangeServeur();
-        e.async_list(aq);
+        e.async_list(aq, this);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
 
         ListView lst = (ListView)this.findViewById(R.id.listView);
 
-        List<EchangeServeur.Person> person = e.getPerson();
+        List<EchangeServeur.Person> person = e.getPersons();
         PersonItemAdapter adapter = new PersonItemAdapter(this, person);
         lst.setAdapter(adapter);
     }
