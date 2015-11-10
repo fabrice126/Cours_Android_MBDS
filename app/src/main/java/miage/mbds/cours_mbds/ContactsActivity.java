@@ -1,4 +1,4 @@
-package miage.mbds.cours_mbds.cours_mbds;
+package miage.mbds.cours_mbds;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,28 +6,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
-import miage.mbds.cours_mbds.R;
+public class ContactsActivity extends AppCompatActivity {
 
-public class HomeActivity extends AppCompatActivity {
-
-    TextView tvWelcome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Bundle params = getIntent().getExtras();
-        String nomExtra = params.getString("nom");
-        String prenomExtra = params.getString("prenom");
-
-        /*___________________________________________________________________________________________________*/
-
-        tvWelcome = (TextView) findViewById(R.id.welcome);
-        tvWelcome.setText("Bienvenue Monsieur " + nomExtra + " " + prenomExtra);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
