@@ -16,6 +16,7 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
 
     private AQuery aq;
     private EchangeServeur e;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

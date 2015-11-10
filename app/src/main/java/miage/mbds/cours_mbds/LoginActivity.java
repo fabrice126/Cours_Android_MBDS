@@ -187,25 +187,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //mAuthTask.execute((Void) null);
             post_login(email, password);
 
-            /*try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-            if(e.getResultat().success){
-                Intent i = new Intent(getApplication(), HomeActivity.class);
-                i.putExtra("nom", e.getResultat().profil.nom);
-                //a supprimer
-                //Log.d("test e.getResult().profil.nom = ", e.getResult().profil.nom);
-                i.putExtra("prenom", e.getResultat().profil.prenom);
-                //a supprimer
-                // Log.d("test e.getResult().profil.prenom = ", e.getResult().profil.prenom);
-
-                startActivity(i);
-            }
-            else{
-                Toast.makeText(this,"Mauvais mot de passe",Toast.LENGTH_LONG).show();
-            }
         }
     }
 
@@ -328,12 +309,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void post_login(String email, String password) {
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("email",email);
+        params.put("email", email);
         params.put("password", password);
 
         e = new EchangeServeur();
         e.async_login(params, aq, this);
+        /*
+        GsonTransformer t = new GsonTransformer();
+>>>>>>> 4735c5c062ca702574e23ca8f2e9790bbd10ede4
 
+        e.async_login(params, aq);
+*/
     }
 }
 
