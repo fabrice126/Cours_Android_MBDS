@@ -1,9 +1,12 @@
 package miage.mbds.cours_mbds;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -47,6 +50,7 @@ public class PersonItemAdapter extends BaseAdapter {
                 viewHolder = new PersonViewHolder();
                 viewHolder.nom_prenom= (TextView)v.findViewById(R.id.nom);
                 viewHolder.connected= (TextView)v.findViewById(R.id.connected);
+                viewHolder.image= (ImageView)v.findViewById(R.id.icone);
                 v.setTag(viewHolder);
             }
             else{
@@ -54,13 +58,21 @@ public class PersonItemAdapter extends BaseAdapter {
             }
             EchangeServeur.Person person = persons.get(position);
             viewHolder.nom_prenom.setText(person.prenom+" "+person.nom);
-            viewHolder.connected.setText(person.connected);
+            if(person.connected) {
+                viewHolder.image.getDrawable().mutate().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                viewHolder.connected.setText("Connecté");
+            }
+            else {
+                viewHolder.image.getDrawable().mutate().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+                viewHolder.connected.setText("Hors ligne");
+            }
             return v;
         }
 
         class PersonViewHolder{
             TextView nom_prenom;
             TextView connected;
+            ImageView image;
         }
 
     }

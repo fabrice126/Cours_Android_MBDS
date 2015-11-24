@@ -44,7 +44,7 @@ public class EchangeServeur{
         public String email;
         public String createdby;
         public String password;
-        public String connected;
+        public boolean connected;
         public String createdAt;
         public String updatedAt;
         public String id;
