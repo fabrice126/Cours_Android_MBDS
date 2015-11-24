@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -57,13 +58,22 @@ public class PersonItemAdapter extends BaseAdapter {
                 viewHolder = (PersonViewHolder) v.getTag();
             }
             EchangeServeur.Person person = persons.get(position);
-            viewHolder.nom_prenom.setText(person.prenom+" "+person.nom);
+            viewHolder.nom_prenom.setText(person.prenom + " " + person.nom);
+            viewHolder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageView image = (ImageView) v;
+                    image.getDrawable().mutate().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+                    Toast.makeText(v.getContext(), "Serveur appelé", Toast.LENGTH_LONG).show();
+                }
+            });
             if(person.connected) {
                 viewHolder.image.getDrawable().mutate().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 viewHolder.connected.setText("Connecté");
             }
             else {
                 viewHolder.image.getDrawable().mutate().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+                viewHolder.image.setOnClickListener(null);
                 viewHolder.connected.setText("Hors ligne");
             }
             return v;
@@ -74,5 +84,4 @@ public class PersonItemAdapter extends BaseAdapter {
             TextView connected;
             ImageView image;
         }
-
     }
