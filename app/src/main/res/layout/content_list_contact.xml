@@ -8,7 +8,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
-        android:src="@drawable/image_circle_contact" />
+        android:src="@drawable/image_circle_contact"
+        android:clickable="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,5 +26,16 @@
         android:layout_marginBottom="3dp"
         android:layout_below="@+id/nom"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:id="@+id/supprimerItem"
+        android:layout_marginRight="35dp"
+        android:textSize="50dp"
+        android:layout_alignBottom="@+id/icone"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>
