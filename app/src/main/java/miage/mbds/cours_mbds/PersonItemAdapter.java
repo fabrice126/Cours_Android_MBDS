@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
+
 import java.util.List;
 
 /**
@@ -52,6 +54,7 @@ public class PersonItemAdapter extends BaseAdapter {
                 viewHolder.nom_prenom= (TextView)v.findViewById(R.id.nom);
                 viewHolder.connected= (TextView)v.findViewById(R.id.connected);
                 viewHolder.image= (ImageView)v.findViewById(R.id.icone);
+                viewHolder.supprimer= (TextView)v.findViewById(R.id.supprimerItem);
                 v.setTag(viewHolder);
             }
             else{
@@ -65,6 +68,15 @@ public class PersonItemAdapter extends BaseAdapter {
                     ImageView image = (ImageView) v;
                     image.getDrawable().mutate().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
                     Toast.makeText(v.getContext(), "Serveur appelé", Toast.LENGTH_LONG).show();
+                }
+            });
+            final String id = person.id;
+            viewHolder.supprimer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AQuery aq = new AQuery(v.getContext());
+                    EchangeServeur e = new EchangeServeur();
+                    e.async_delete(aq, id);
                 }
             });
             if(person.connected) {
@@ -83,5 +95,6 @@ public class PersonItemAdapter extends BaseAdapter {
             TextView nom_prenom;
             TextView connected;
             ImageView image;
+            TextView supprimer;
         }
     }

@@ -1,6 +1,7 @@
 package miage.mbds.cours_mbds;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -105,10 +106,23 @@ public class EchangeServeur{
                 persons = gson.fromJson(json.toString(), new TypeToken<ArrayList<Person>>() {
                 }.getType());
                 Log.d("Taille", "" + persons.size());
-                for(int i = 0; i<persons.size();i++) {
+                for (int i = 0; i < persons.size(); i++) {
                     Log.d("Réponse", "" + persons.get(i).prenom);
                 }
                 listener.ResultCallBack();
+            }
+        });
+    }
+
+    public void async_delete(final AQuery aq, String id){
+
+        String url = "http://92.243.14.22/person/"+id;
+
+        aq.delete(url, String.class, new AjaxCallback<String>() {
+            @Override
+            public void callback(String url, String json, AjaxStatus status) {
+                Log.d("REEEES", "Suppression");
+                Toast.makeText(aq.getContext(), "Suppression effectuée", Toast.LENGTH_LONG).show();
             }
         });
     }
