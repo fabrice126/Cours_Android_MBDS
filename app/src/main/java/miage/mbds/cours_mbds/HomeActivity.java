@@ -1,22 +1,27 @@
 package miage.mbds.cours_mbds;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import com.androidquery.AQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements ResultCallBack{
+public class HomeActivity extends AppCompatActivity implements ResultCallBack,View.OnClickListener{
 
     private AQuery aq;
     private EchangeServeur e;
-
+    private Button btnAddServeur;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +32,8 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
         Bundle params = getIntent().getExtras();
         String nomExtra = params.getString("nom");
         String prenomExtra = params.getString("prenom");
+        btnAddServeur = (Button) findViewById(R.id.addServeur);
+        btnAddServeur.setOnClickListener(this);
 
         Toast.makeText(this, "Bienvenue "+prenomExtra+" "+nomExtra, Toast.LENGTH_LONG).show();
 
@@ -53,4 +60,17 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
         PersonItemAdapter adapter = new PersonItemAdapter(this, person);
         lst.setAdapter(adapter);
     }
+    @Override
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.addServeur:
+                    Intent intent = new Intent(this, RegisterActivity.class);
+                    startActivity(intent);
+                break;
+        }
+
+    }
+
+
 }
