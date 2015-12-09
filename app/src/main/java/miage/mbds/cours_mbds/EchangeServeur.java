@@ -1,7 +1,6 @@
 package miage.mbds.cours_mbds;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -22,9 +21,9 @@ import java.util.Map;
  */
 public class EchangeServeur{
 
-    private ResultCallBack listener;
     private Result resultat;
     private List<Person> persons = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
     public static class Result {
 
@@ -51,6 +50,20 @@ public class EchangeServeur{
         public String id;
     }
 
+    public static class Product {
+
+        public String name;
+        public String description;
+        public int price;
+        public int calories;
+        public String type;
+        public String picture;
+        public int discount;
+        public String createdAt;
+        public String updatedAt;
+        public String id;
+    }
+
     private static class GsonTransformer implements Transformer {
 
         public <T> T transform(String url, Class<T> type, String encoding, byte[] data, AjaxStatus status) {
@@ -61,11 +74,9 @@ public class EchangeServeur{
 
     public void async_login(Map<String, Object> params, AQuery aq, final ResultCallBack listener){
 
-        this.listener = listener;
         GsonTransformer t = new GsonTransformer();
-        String url = "http://92.243.14.22/person/login";
+        String url = "http://92.243.14.22:1337/person/login";
 
-        Log.d("!!!!!!", params.toString());
         aq.transformer(t).progress(this).ajax(url, params, Result.class, new AjaxCallback<Result>() {
             public void callback(String url, Result result, AjaxStatus status) {
                 Gson gson = new Gson();
@@ -80,14 +91,12 @@ public class EchangeServeur{
     public void async_register(Map<String, Object> params, AQuery aq){
 
         GsonTransformer t = new GsonTransformer();
-        String url = "http://92.243.14.22/person/";
+        String url = "http://92.243.14.22:1337/person/";
 
-        Log.d("!!!!!!", params.toString());
         aq.transformer(t).ajax(url, params, Person.class, new AjaxCallback<Person>() {
             public void callback(String url, Person person, AjaxStatus status) {
                 Gson gson = new Gson();
                 Log.d("Réponse", gson.toJson(person));
-                Log.d("Nom du mec", person.nom);
             }
         });
 
@@ -95,9 +104,8 @@ public class EchangeServeur{
 
     public void async_list(AQuery aq, final ResultCallBack listener){
 
-        this.listener = listener;
         GsonTransformer t = new GsonTransformer();
-        String url = "http://92.243.14.22/person/";
+        String url = "http://92.243.14.22:1337/person/";
 
         aq.ajax(url, JSONArray.class, new AjaxCallback<JSONArray>() {
             @Override
@@ -105,24 +113,37 @@ public class EchangeServeur{
                 Gson gson = new Gson();
                 persons = gson.fromJson(json.toString(), new TypeToken<ArrayList<Person>>() {
                 }.getType());
-                Log.d("Taille", "" + persons.size());
-                for (int i = 0; i < persons.size(); i++) {
-                    Log.d("Réponse", "" + persons.get(i).prenom);
-                }
                 listener.ResultCallBack();
             }
         });
     }
 
-    public void async_delete(final AQuery aq, String id){
+    public void async_delete(final AQuery aq, String id, final ResultCallBack listener){
 
-        String url = "http://92.243.14.22/person/"+id;
+        String url = "http://92.243.14.22:1337/person/"+id;
 
         aq.delete(url, String.class, new AjaxCallback<String>() {
             @Override
             public void callback(String url, String json, AjaxStatus status) {
-                Log.d("REEEES", "Suppression");
-                Toast.makeText(aq.getContext(), "Suppression effectuée", Toast.LENGTH_LONG).show();
+                listener.ResultCallBackDelete();
+            }
+        });
+    }
+
+
+    public void async_list_product(AQuery aq, final ResultCallBack listener){
+
+        GsonTransformer t = new GsonTransformer();
+        String url = "http://92.243.14.22:1337/product/";
+
+        aq.ajax(url, JSONArray.class, new AjaxCallback<JSONArray>() {
+            @Override
+            public void callback(String url, JSONArray json, AjaxStatus status) {
+                Gson gson = new Gson();
+                products = gson.fromJson(json.toString(), new TypeToken<ArrayList<Product>>() {
+                }.getType());
+                Log.d("PRODUIT 1",products.get(0).name);
+                listener.ResultCallBack();
             }
         });
     }
@@ -133,6 +154,10 @@ public class EchangeServeur{
 
     public List<Person> getPersons() {
         return persons;
+    }
+
+    public List<Product> getProducts() {
+        return products;
     }
 
 }

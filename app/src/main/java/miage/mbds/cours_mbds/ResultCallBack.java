@@ -6,4 +6,6 @@ package miage.mbds.cours_mbds;
 public interface ResultCallBack {
 
     void ResultCallBack();
+
+    void ResultCallBackDelete();
 }

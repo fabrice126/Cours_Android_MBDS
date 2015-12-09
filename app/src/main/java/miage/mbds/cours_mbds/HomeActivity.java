@@ -1,5 +1,6 @@
 package miage.mbds.cours_mbds;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.androidquery.AQuery;
 
 import java.util.List;
@@ -16,6 +18,7 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
 
     private AQuery aq;
     private EchangeServeur e;
+    private PersonItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,8 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
 
         aq = new AQuery(this);
         e = new EchangeServeur();
-        e.async_list(aq, this);
+        updateList();
+        startActivity(new Intent(this, ProductActivity.class));
     }
 
     @Override
@@ -50,7 +54,18 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
         ListView lst = (ListView)this.findViewById(R.id.listView);
 
         List<EchangeServeur.Person> person = e.getPersons();
-        PersonItemAdapter adapter = new PersonItemAdapter(this, person);
+        adapter = new PersonItemAdapter(this, person, this);
         lst.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void ResultCallBackDelete() {
+        updateList();
+        Toast.makeText(aq.getContext(), "Suppression effectuée", Toast.LENGTH_LONG).show();
+    }
+
+    public void updateList() {
+        e.async_list(aq, this);
     }
 }

@@ -21,10 +21,12 @@ public class PersonItemAdapter extends BaseAdapter {
 
         private Context context;
         public List<EchangeServeur.Person> persons;
+        private ResultCallBack listener;
 
-        public PersonItemAdapter(Context context, List<EchangeServeur.Person> persons) {
+        public PersonItemAdapter(Context context, List<EchangeServeur.Person> persons, ResultCallBack listener) {
             this.context = context;
             this.persons = persons;
+            this.listener = listener;
         }
 
         @Override
@@ -76,7 +78,7 @@ public class PersonItemAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     AQuery aq = new AQuery(v.getContext());
                     EchangeServeur e = new EchangeServeur();
-                    e.async_delete(aq, id);
+                    e.async_delete(aq, id, PersonItemAdapter.this.listener);
                 }
             });
             if(person.connected) {
