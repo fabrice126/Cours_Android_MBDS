@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -14,12 +15,13 @@ import com.androidquery.AQuery;
 
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements ResultCallBack{
+public class HomeActivity extends AppCompatActivity implements ResultCallBack,View.OnClickListener{
 
     private AQuery aq;
     private EchangeServeur e;
     private PersonItemAdapter adapter;
-
+    private Button btnAddServeur;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,8 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
         Bundle params = getIntent().getExtras();
         String nomExtra = params.getString("nom");
         String prenomExtra = params.getString("prenom");
+        btnAddServeur = (Button) findViewById(R.id.addServeur);
+        btnAddServeur.setOnClickListener(this);
 
         Toast.makeText(this, "Bienvenue "+prenomExtra+" "+nomExtra, Toast.LENGTH_LONG).show();
 
@@ -68,4 +72,17 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack{
     public void updateList() {
         e.async_list(aq, this);
     }
+    @Override
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.addServeur:
+                    Intent intent = new Intent(this, RegisterActivity.class);
+                    startActivity(intent);
+                break;
+        }
+
+    }
+
+
 }
