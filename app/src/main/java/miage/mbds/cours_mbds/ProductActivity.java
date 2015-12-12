@@ -1,5 +1,6 @@
 package miage.mbds.cours_mbds;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,9 +28,18 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
 
     private  AQuery aq;
     private EchangeServeur e;
-    private List<EchangeServeur.Product> products = new ArrayList<EchangeServeur.Product>();
-    private ProductItemAdapter adapter;
+    private List<EchangeServeur.Product> products_entree = new ArrayList<EchangeServeur.Product>();
+    private List<EchangeServeur.Product> products_plat = new ArrayList<EchangeServeur.Product>();
+    private List<EchangeServeur.Product> products_dessert = new ArrayList<EchangeServeur.Product>();
+    private List<EchangeServeur.Product> products_apperitif = new ArrayList<EchangeServeur.Product>();
+    private ProductItemAdapter adapter_plat;
+    private ProductItemAdapter adapter_dessert;
+    private ProductItemAdapter adapter_apperitif;
     private Commande commande;
+    ListView lst_plat;
+    ListView lst_entree;
+    ListView lst_dessert;
+    ListView lst_apperitif;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -97,7 +107,6 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -122,8 +131,22 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
 
     @Override
     public void ResultCallBack() {
-        Log.d("callback", "dans le callback");
-        updateList(0);
+        for(int i = 0; i< e.getProducts().size(); i++) {
+            if(e.getProducts().get(i).type.equals("Entrée")) {
+                products_entree.add(e.getProducts().get(i));
+            }
+            else if(e.getProducts().get(i).type.equals("Plat ")) {
+                products_plat.add(e.getProducts().get(i));
+            }
+            else if(e.getProducts().get(i).type.equals("Dessert")) {
+                products_dessert.add(e.getProducts().get(i));
+            }
+            else if(e.getProducts().get(i).type.equals("Appéritif")) {
+                products_apperitif.add(e.getProducts().get(i));
+            }
+        }
+        EntreeFragment fragment = (EntreeFragment)getSupportFragmentManager().getFragments().get(0);
+        fragment.create_list(this, products_entree, commande);
     }
 
     @Override
@@ -131,42 +154,38 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
 
     }
 
-    public void updateList(int item) {
+    public void updateList(int position) {
 
-        products.clear();
-        ListView lst = (ListView)this.findViewById(R.id.listView2);
-        String type = "Entrée";
-        if(item == 1) {
-            type = "Plat ";
+        if(position == 0) {
+            EntreeFragment fragment = (EntreeFragment)getSupportFragmentManager().getFragments().get(0);
+            fragment.create_list(this, products_entree, commande);
         }
-        else if(item == 2) {
-            type = "Dessert";
+        else if(position == 1) {
+            PlatFragment fragment = (PlatFragment)getSupportFragmentManager().getFragments().get(1);
+            fragment.create_list(this, products_plat, commande);
         }
-        else if(item == 3) {
-            type = "Appéritif";
+        else if(position == 2) {
+            DessertFragment fragment = (DessertFragment)getSupportFragmentManager().getFragments().get(2);
+            fragment.create_list(this, products_dessert, commande);
         }
-
-        for(int i = 0; i< e.getProducts().size(); i++) {
-            if(e.getProducts().get(i).type.equals(type)) {
-                products.add(e.getProducts().get(i));
-            }
+        else if(position == 3) {
+            ApperitifFragment fragment = (ApperitifFragment)getSupportFragmentManager().getFragments().get(3);
+            fragment.create_list(this, products_apperitif, commande);
         }
-        Log.d("size", "" + products.size());
-        adapter = new ProductItemAdapter(this, products, commande);
-        lst.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class EntreeFragment extends Fragment {
+    public static class EntreeFragment extends Fragment{
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "1";
+        private ProductItemAdapter adapter;
+        ListView lst;
 
         public EntreeFragment() {
         }
@@ -186,11 +205,16 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_product, container, false);
-            rootView.setTag("entree");
-            Log.d("AAAAAA", "entree");
+            View rootView = inflater.inflate(R.layout.fragment_product_entree, container, false);
+            lst = (ListView)rootView.findViewById(R.id.listView_entree);
             return rootView;
         }
+
+        public void create_list(Context context, List<EchangeServeur.Product> products, Commande commande) {
+            adapter = new ProductItemAdapter(context, products, commande);
+            lst.setAdapter(adapter);
+        }
+
     }
     /**
      * A placeholder fragment containing a simple view.
@@ -201,6 +225,8 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "2";
+        private ProductItemAdapter adapter;
+        ListView lst;
 
         public PlatFragment() {
         }
@@ -220,11 +246,15 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_product, container, false);
-            rootView.setTag("plat");
-            Log.d("AAAAAA", "plat");
+            View rootView = inflater.inflate(R.layout.fragment_product_plat, container, false);
+            lst = (ListView)rootView.findViewById(R.id.listView_plat);
             return rootView;
         }
+        public void create_list(Context context, List<EchangeServeur.Product> products, Commande commande) {
+            adapter = new ProductItemAdapter(context, products, commande);
+            lst.setAdapter(adapter);
+        }
+
     }
     /**
      * A placeholder fragment containing a simple view.
@@ -235,6 +265,8 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "3";
+        private ProductItemAdapter adapter;
+        ListView lst;
 
         public DessertFragment() {
         }
@@ -254,10 +286,13 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_product, container, false);
-            rootView.setTag("dessert");
-            Log.d("AAAAAA", "dessert");
+            View rootView = inflater.inflate(R.layout.fragment_product_dessert, container, false);
+            lst = (ListView)rootView.findViewById(R.id.listView_dessert);
             return rootView;
+        }
+        public void create_list(Context context, List<EchangeServeur.Product> products, Commande commande) {
+            adapter = new ProductItemAdapter(context, products, commande);
+            lst.setAdapter(adapter);
         }
 
     }
@@ -270,6 +305,8 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "4";
+        private ProductItemAdapter adapter;
+        ListView lst;
 
         public ApperitifFragment() {
         }
@@ -289,10 +326,13 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_product, container, false);
-            rootView.setTag("apperitif");
-            Log.d("AAAAAA", "apperitif");
+            View rootView = inflater.inflate(R.layout.fragment_product_apperitif, container, false);
+            lst = (ListView)rootView.findViewById(R.id.listView_apperitif);
             return rootView;
+        }
+        public void create_list(Context context, List<EchangeServeur.Product> products, Commande commande) {
+            adapter = new ProductItemAdapter(context, products, commande);
+            lst.setAdapter(adapter);
         }
 
     }
@@ -350,4 +390,5 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
             return null;
         }
     }
+
 }
