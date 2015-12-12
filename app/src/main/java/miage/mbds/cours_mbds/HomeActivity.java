@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack,Vi
     private EchangeServeur e;
     private PersonItemAdapter adapter;
     private Button btnAddServeur;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +49,6 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack,Vi
         aq = new AQuery(this);
         e = new EchangeServeur();
         updateList();
-        startActivity(new Intent(this, ProductActivity.class));
     }
 
     @Override

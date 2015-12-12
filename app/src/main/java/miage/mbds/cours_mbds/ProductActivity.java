@@ -29,6 +29,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
     private EchangeServeur e;
     private List<EchangeServeur.Product> products = new ArrayList<EchangeServeur.Product>();
     private ProductItemAdapter adapter;
+    private Commande commande;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -59,6 +60,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
         aq = new AQuery(this);
         e = new EchangeServeur();
         e.async_list_product(aq, this);
+        commande = new Commande();
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -150,7 +152,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
             }
         }
         Log.d("size", "" + products.size());
-        adapter = new ProductItemAdapter(this, products, this);
+        adapter = new ProductItemAdapter(this, products, commande);
         lst.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

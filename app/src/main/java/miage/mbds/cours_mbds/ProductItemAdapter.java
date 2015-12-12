@@ -4,10 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.androidquery.AQuery;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,12 +18,12 @@ public class ProductItemAdapter extends BaseAdapter {
 
     private Context context;
     public List<EchangeServeur.Product> products;
-    private ResultCallBack listener;
+    private Commande commande;
 
-    public ProductItemAdapter(Context context, List<EchangeServeur.Product> products, ResultCallBack listener) {
+    public ProductItemAdapter(Context context, List<EchangeServeur.Product> products, Commande commande) {
         this.context = context;
         this.products = products;
-        this.listener = listener;
+        this.commande = commande;
     }
 
     @Override
@@ -57,25 +57,26 @@ public class ProductItemAdapter extends BaseAdapter {
             viewHolder.calories= (TextView)v.findViewById(R.id.calories);
             viewHolder.type= (TextView)v.findViewById(R.id.type);
             viewHolder.discount= (TextView)v.findViewById(R.id.discount);
+            viewHolder.ajouter= (Button) v.findViewById(R.id.addProduct);
             v.setTag(viewHolder);
         }
         else{
             viewHolder = (ProductViewHolder) v.getTag();
         }
-        EchangeServeur.Product product = products.get(position);
+        final EchangeServeur.Product product = products.get(position);
         viewHolder.name.setText(product.name);
         viewHolder.description.setText(product.description);
         viewHolder.price.setText(""+product.price);
         viewHolder.calories.setText(""+product.calories);
         viewHolder.type.setText(product.type);
         viewHolder.discount.setText(""+product.discount);
-        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ajouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                commande.getProducts().add(product);
+                Toast.makeText(context, "Produit ajouté", Toast.LENGTH_LONG).show();
             }
         });
-        final String id = product.id;
         return v;
     }
 
@@ -87,6 +88,6 @@ public class ProductItemAdapter extends BaseAdapter {
         TextView calories;
         TextView type;
         TextView discount;
-        TextView ajouter;
+        Button ajouter;
     }
 }
