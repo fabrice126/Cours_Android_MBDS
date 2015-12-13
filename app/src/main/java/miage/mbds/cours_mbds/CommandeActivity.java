@@ -1,11 +1,11 @@
 package miage.mbds.cours_mbds;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.androidquery.AQuery;
@@ -38,8 +38,8 @@ public class CommandeActivity extends AppCompatActivity {
         adapter = new CommandeItemAdapter(this, commande.getProducts(), lst);
         lst.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button button_commande = (Button) findViewById(R.id.passCommande);
+        button_commande.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -59,7 +59,6 @@ public class CommandeActivity extends AppCompatActivity {
         int discount = 0;
 
         JSONArray items = new JSONArray();
-        Log.d("size", "" + commande.getProducts().size());
         for(int i = 0; i<commande.getProducts().size();i++) {
             JSONObject item = new JSONObject();
             item.put("id",commande.getProducts().get(i).id);

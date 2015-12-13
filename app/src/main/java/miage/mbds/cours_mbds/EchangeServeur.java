@@ -1,5 +1,7 @@
 package miage.mbds.cours_mbds;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.androidquery.AQuery;
@@ -51,7 +53,7 @@ public class EchangeServeur{
         public String id;
     }
 
-    public static class Product {
+    public static class Product implements Parcelable {
 
         public String name;
         public String description;
@@ -63,6 +65,50 @@ public class EchangeServeur{
         public String createdAt;
         public String updatedAt;
         public String id;
+
+        protected Product(Parcel in) {
+            name = in.readString();
+            description = in.readString();
+            price = in.readInt();
+            calories = in.readInt();
+            type = in.readString();
+            picture = in.readString();
+            discount = in.readInt();
+            createdAt = in.readString();
+            updatedAt = in.readString();
+            id = in.readString();
+        }
+
+        public static final Creator<Product> CREATOR = new Creator<Product>() {
+            @Override
+            public Product createFromParcel(Parcel in) {
+                return new Product(in);
+            }
+
+            @Override
+            public Product[] newArray(int size) {
+                return new Product[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(name);
+            dest.writeString(description);
+            dest.writeInt(price);
+            dest.writeInt(calories);
+            dest.writeString(type);
+            dest.writeString(picture);
+            dest.writeInt(discount);
+            dest.writeString(createdAt);
+            dest.writeString(updatedAt);
+            dest.writeString(id);
+        }
     }
 
     private static class GsonTransformer implements Transformer {

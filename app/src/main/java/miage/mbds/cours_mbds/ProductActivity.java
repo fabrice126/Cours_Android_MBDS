@@ -78,6 +78,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+        mViewPager.setOffscreenPageLimit(5);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -168,7 +169,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "1";
+        private static final String ARG_SECTION_NUMBER = "section_number";
         private ProductItemAdapter adapter;
         ListView lst;
 
@@ -209,7 +210,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "2";
+        private static final String ARG_SECTION_NUMBER = "section_number";
         private ProductItemAdapter adapter;
         ListView lst;
 
@@ -249,7 +250,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "3";
+        private static final String ARG_SECTION_NUMBER = "section_number";
         private ProductItemAdapter adapter;
         ListView lst;
 
@@ -289,7 +290,7 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "4";
+        private static final String ARG_SECTION_NUMBER = "section_number";
         private ProductItemAdapter adapter;
         ListView lst;
 

@@ -1,6 +1,7 @@
 package miage.mbds.cours_mbds;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -53,6 +54,7 @@ public class CommandeItemAdapter extends BaseAdapter {
             viewHolder.name= (TextView)v.findViewById(R.id.name);
             viewHolder.price= (TextView)v.findViewById(R.id.price);
             viewHolder.supprimer= (Button)v.findViewById(R.id.deleteProduct);
+            viewHolder.detail= (Button)v.findViewById(R.id.detail);
             v.setTag(viewHolder);
         }
         else{
@@ -65,9 +67,17 @@ public class CommandeItemAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Commande.getInstance().getProducts().remove(product);
-                CommandeItemAdapter adapter = new CommandeItemAdapter(context, Commande.getInstance().getProducts(),lst);
+                CommandeItemAdapter adapter = new CommandeItemAdapter(context, Commande.getInstance().getProducts(), lst);
                 lst.setAdapter(adapter);
                 Toast.makeText(context, "Produit supprimé", Toast.LENGTH_LONG).show();
+            }
+        });
+        viewHolder.detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailProductActivity.class);
+                intent.putExtra("miage.mbds.cours_mbds.EchangeServeur.Product", product);
+                context.startActivity(intent);
             }
         });
         return v;
@@ -77,5 +87,6 @@ public class CommandeItemAdapter extends BaseAdapter {
         TextView name;
         TextView price;
         Button supprimer;
+        Button detail;
     }
 }
