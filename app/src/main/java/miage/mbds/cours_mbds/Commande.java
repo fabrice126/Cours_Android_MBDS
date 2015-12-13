@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Commande {
 
+    protected static Commande commandeInstance = null;
 
     private List<EchangeServeur.Product> products = new ArrayList<EchangeServeur.Product>();
 
@@ -17,5 +18,14 @@ public class Commande {
 
     public List<EchangeServeur.Product> getProducts() {
         return products;
+    }
+
+
+    public static Commande getInstance() {
+        if( commandeInstance == null ) {
+            commandeInstance = new Commande();
+        }
+
+        return commandeInstance;
     }
 }

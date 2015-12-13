@@ -173,15 +173,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.put("pays",spinnerCountry.getSelectedItem().toString());
         EchangeServeur e = new EchangeServeur();
         e.async_register(params, aq);
-        //a supprimer
-        /*aq.transformer(t).ajax(url, params, Profil.class, new AjaxCallback<Profil>() {
-            public void callback(String url, Profil profil, AjaxStatus status) {
-                Gson gson = new Gson();
-
-                Log.d("Réponse", gson.toJson(profil));
-                Log.d("Nom du mec", profil.nom);
-            }
-        });*/
 
     }
 

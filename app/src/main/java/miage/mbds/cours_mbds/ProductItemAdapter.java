@@ -1,6 +1,7 @@
 package miage.mbds.cours_mbds;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,12 +19,10 @@ public class ProductItemAdapter extends BaseAdapter {
 
     private Context context;
     public List<EchangeServeur.Product> products;
-    private Commande commande;
 
-    public ProductItemAdapter(Context context, List<EchangeServeur.Product> products, Commande commande) {
+    public ProductItemAdapter(Context context, List<EchangeServeur.Product> products) {
         this.context = context;
         this.products = products;
-        this.commande = commande;
     }
 
     @Override
@@ -64,16 +63,18 @@ public class ProductItemAdapter extends BaseAdapter {
             viewHolder = (ProductViewHolder) v.getTag();
         }
         final EchangeServeur.Product product = products.get(position);
+        Log.d("aaaaa",""+product.discount);
+        Log.d("cal",""+product.calories);
         viewHolder.name.setText(product.name);
         viewHolder.description.setText(product.description);
-        viewHolder.price.setText(""+product.price);
-        viewHolder.calories.setText(""+product.calories);
+        viewHolder.price.setText(String.valueOf(product.price));
+        viewHolder.calories.setText(String.valueOf(product.calories));
         viewHolder.type.setText(product.type);
-        viewHolder.discount.setText(""+product.discount);
+        viewHolder.discount.setText(String.valueOf(product.discount));
         viewHolder.ajouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                commande.getProducts().add(product);
+                Commande.getInstance().getProducts().add(product);
                 Toast.makeText(context, "Produit ajouté", Toast.LENGTH_LONG).show();
             }
         });

@@ -74,11 +74,7 @@
         android:layout_height="wrap_content"
         android:text="Ajouter"
         android:id="@+id/addProduct"
-        android:backgroundTint="#4285f4"
-        android:background="@drawable/button_radius"
-        android:textColor="#ffffff"
-        android:clickable="true"
-        android:enabled="true"
-        android:layout_alignTop="@+id/description"
-        android:layout_toEndOf="@+id/discount" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

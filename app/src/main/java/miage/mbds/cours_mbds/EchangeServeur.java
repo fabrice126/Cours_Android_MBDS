@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,10 +143,25 @@ public class EchangeServeur{
                 Gson gson = new Gson();
                 products = gson.fromJson(json.toString(), new TypeToken<ArrayList<Product>>() {
                 }.getType());
-                Log.d("PRODUIT 1",products.get(0).name);
+                Log.d("PRODUIT 1", products.get(0).id);
+                Log.d("PRODUIT 1", String.valueOf(products.get(0).discount));
+                Log.d("PRODUIT 1", String.valueOf(products.get(0).price));
                 listener.ResultCallBack();
             }
         });
+    }
+
+    public void async_menu(JSONObject json, AQuery aq){
+
+        String url = "http://92.243.14.22:1337/menu/";
+        Log.d("params", json.toString());
+
+        aq.post(url, json, JSONObject.class, new AjaxCallback<JSONObject>() {
+            public void callback(String url, JSONObject json, AjaxStatus status) {
+                Log.d("Réponse", "" + json);
+            }
+        });
+
     }
 
     public Result getResultat() {
