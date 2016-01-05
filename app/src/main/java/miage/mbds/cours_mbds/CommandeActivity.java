@@ -3,7 +3,6 @@ package miage.mbds.cours_mbds;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -32,6 +31,8 @@ public class CommandeActivity extends AppCompatActivity {
         aq = new AQuery(this);
         e = new EchangeServeur();
         commande = Commande.getInstance();
+
+        e.async_list_menu(aq);
 
         ListView lst = (ListView)this.findViewById(R.id.listView);
 
@@ -80,10 +81,7 @@ public class CommandeActivity extends AppCompatActivity {
         obj.put("cooker",cooker);
         obj.put("items",items);
 
-        JSONObject ob = new JSONObject();
-        ob.put("0", obj);
-
-        e.async_menu(ob, aq);
+        e.async_menu(obj, aq);
 
     }
 

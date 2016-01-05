@@ -27,6 +27,7 @@ public class EchangeServeur{
     private Result resultat;
     private List<Person> persons = new ArrayList<>();
     private List<Product> products = new ArrayList<>();
+    private List<Menu> menu = new ArrayList<>();
 
     public static class Result {
 
@@ -50,6 +51,25 @@ public class EchangeServeur{
         public boolean connected;
         public String createdAt;
         public String updatedAt;
+        public String id;
+    }
+
+    public static class Menu {
+        public int price;
+        public int discount;
+        public Server server;
+        public Cooker cooker;
+        public ArrayList<Product> items;
+        public String createdAt;
+        public String updatedAt;
+        public String id;
+    }
+
+    public static class Server {
+        public String id;
+    }
+
+    public static class Cooker {
         public String id;
     }
 
@@ -205,6 +225,26 @@ public class EchangeServeur{
         aq.post(url, json, JSONObject.class, new AjaxCallback<JSONObject>() {
             public void callback(String url, JSONObject json, AjaxStatus status) {
                 Log.d("Réponse", "" + json);
+            }
+        });
+
+    }
+
+
+    public void async_list_menu(AQuery aq){
+
+        String url = "http://92.243.14.22:1337/menu/";
+
+        aq.ajax(url, JSONArray.class, new AjaxCallback<JSONArray>() {
+            @Override
+            public void callback(String url, JSONArray json, AjaxStatus status) {
+                Log.d("Réponse", "" + json);
+                Gson gson = new Gson();
+                menu = gson.fromJson(json.toString(), new TypeToken<ArrayList<Menu>>() {
+                }.getType());
+                Log.d("Menu 1", menu.get(menu.size()-1).id);
+                Log.d("Menu 1", menu.get(menu.size()-1).price+"");
+                Log.d("Product 1", menu.get(menu.size()-1).items.toString());
             }
         });
 
