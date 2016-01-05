@@ -70,7 +70,13 @@ public class EchangeServeur{
     }
 
     public static class Cooker {
-        public String id;
+        public String id; //"566c6eb783916d6520e32581"
+        public String apikey;// "AIzaSyBNy7W34fFGy8oWrtD7q-O7tXwTC0LW6o4"
+        public String email;// "email@cuisinier.fr"
+        public String name;// "Nom du cuisinier"
+        public String gcmkey;// "dKgIaHlarSg:APA91bE1IQemhZ9mnrBJpCZrGIOxKZdkrkl1M_qReF6mLmcgTuq4opV0TamDSNug33Rlbi96Wdo3z3JGhC-wHuraLkTtTmDaAJdXGyoS2xD5fixIu8lLjwcs1Vy92x6HzIcN__-1atmx"
+        public boolean active;// true
+
     }
 
     public static class Product implements Parcelable {

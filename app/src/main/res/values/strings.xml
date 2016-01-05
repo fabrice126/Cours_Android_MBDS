@@ -33,4 +33,11 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_commande">CommandeActivity</string>
+
+
+    <string name="gcm_defaultSenderId">319543281250</string>
+    <string name="name">Nom complet</string>
+    <string name="registering_message">Créer un compte restaurateur</string>
+    <string name="token_error_message">Votre cuisinier n\'a pas été enregistré</string>
+    <string name="gcm_send_message">Votre cuisinier a  été enregistré</string>
 </resources>
