@@ -1,0 +1,11 @@
+Read me du projet android :
+
+-Pour se connecter à l'application, 2 solutions :
+  -S'authentifier :
+    -Mail : test@test.fr
+    -Mot de passe : 147258
+  -Créer un compte
+  
+  
+/!\ Si des données sur le serveur ne sont pas au bon format JSON, l'application risque de bugguer  
+    
