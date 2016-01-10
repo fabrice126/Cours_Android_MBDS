@@ -29,4 +29,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="49dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Il n'y a encore aucun produit dans cette commande"
+        android:id="@+id/aucun_produit"
+        android:layout_alignTop="@+id/listView"
+        android:layout_alignStart="@+id/passCommande" />
+
 </RelativeLayout>

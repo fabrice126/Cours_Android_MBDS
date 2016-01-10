@@ -3,7 +3,6 @@ package miage.mbds.cours_mbds;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -29,25 +28,27 @@ public class HomeActivity extends AppCompatActivity implements ResultCallBack,Vi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Bundle params = getIntent().getExtras();
-        String nomExtra = params.getString("nom");
-        String prenomExtra = params.getString("prenom");
+        EchangeServeur.Person serveur = Commande.getInstance().getServeur();
+        if(serveur != null) {
+            Toast.makeText(this, "Bienvenue " + serveur.prenom + " " + serveur.nom, Toast.LENGTH_LONG).show();
+        }
+        else {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
         btnAddServeur = (Button) findViewById(R.id.addServeur);
         btnAddServeur.setOnClickListener(this);
-
-        Toast.makeText(this, "Bienvenue "+prenomExtra+" "+nomExtra, Toast.LENGTH_LONG).show();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(getApplicationContext(), ProductActivity.class));
             }
         });
 
         aq = new AQuery(this);
-        e = new EchangeServeur();
+        e = EchangeServeur.getInstance();
         updateList();
     }
 

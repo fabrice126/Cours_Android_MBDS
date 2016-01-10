@@ -274,8 +274,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void ResultCallBack() {
         if(e.getResultat().success) {
             Intent i = new Intent(getApplication(), HomeActivity.class);
-            i.putExtra("prenom", e.getResultat().person.prenom);
-            i.putExtra("nom", e.getResultat().person.nom);
+            Commande.getInstance().setServeur(e.getResultat().person);
             startActivity(i);
         }
         else {

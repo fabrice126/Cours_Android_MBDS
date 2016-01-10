@@ -21,20 +21,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.EditText;
 
 import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +37,8 @@ public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
+    private AQuery aq;
+    private EchangeServeur e;
 
     public RegistrationIntentService() {
         super(TAG);
@@ -91,6 +88,7 @@ public class RegistrationIntentService extends IntentService {
 
     public void jsonCallback(String url, JSONObject json, AjaxStatus status){
         System.out.println(json.toString());
+        Log.d("GCM",json.toString());
         if(json != null){
           onComplete();
         }else{
@@ -109,6 +107,9 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
+
+        aq = new AQuery(this);
+        e = EchangeServeur.getInstance();
         System.out.println(token);
         String name=getString(R.string.cooker_name),  email=getString(R.string.cooker_email), api_key=getString(R.string.api_key).equals("$$")?"AIzaSyBNy7W34fFGy8oWrtD7q-O7tXwTC0LW6o4":getString(R.string.api_key);
         AQuery aq = new AQuery(this);
@@ -117,7 +118,7 @@ public class RegistrationIntentService extends IntentService {
         params.put("email", email);
         params.put("gcmkey", token);
         params.put("apikey", api_key);
-        aq.ajax("http://92.243.14.22:1337/cooker", params, JSONObject.class,this,"jsonCallback");
+        e.async_register_cooker(params,aq);
     }
 
 }

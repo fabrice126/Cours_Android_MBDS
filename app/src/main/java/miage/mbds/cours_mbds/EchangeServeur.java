@@ -29,6 +29,21 @@ public class EchangeServeur{
     private List<Product> products = new ArrayList<>();
     private List<Menu> menu = new ArrayList<>();
 
+    protected static EchangeServeur echangeInstance = null;
+
+    public EchangeServeur() {
+
+    }
+
+
+    public static EchangeServeur getInstance() {
+        if( echangeInstance == null ) {
+            echangeInstance = new EchangeServeur();
+        }
+
+        return echangeInstance;
+    }
+
     public static class Result {
 
         @SerializedName("user")
@@ -48,6 +63,7 @@ public class EchangeServeur{
         public String email;
         public String createdby;
         public String password;
+        public String cooker;
         public boolean connected;
         public String createdAt;
         public String updatedAt;
@@ -55,8 +71,8 @@ public class EchangeServeur{
     }
 
     public static class Menu {
-        public int price;
-        public int discount;
+        public String price;
+        public String discount;
         public Server server;
         public Cooker cooker;
         public ArrayList<Product> items;
@@ -70,12 +86,12 @@ public class EchangeServeur{
     }
 
     public static class Cooker {
-        public String id; //"566c6eb783916d6520e32581"
-        public String apikey;// "AIzaSyBNy7W34fFGy8oWrtD7q-O7tXwTC0LW6o4"
-        public String email;// "email@cuisinier.fr"
-        public String name;// "Nom du cuisinier"
-        public String gcmkey;// "dKgIaHlarSg:APA91bE1IQemhZ9mnrBJpCZrGIOxKZdkrkl1M_qReF6mLmcgTuq4opV0TamDSNug33Rlbi96Wdo3z3JGhC-wHuraLkTtTmDaAJdXGyoS2xD5fixIu8lLjwcs1Vy92x6HzIcN__-1atmx"
-        public boolean active;// true
+        public String id;
+        public String apikey;
+        public String email;
+        public String name;
+        public String gcmkey;
+        public boolean active;
 
     }
 
@@ -169,7 +185,7 @@ public class EchangeServeur{
         aq.transformer(t).ajax(url, params, Person.class, new AjaxCallback<Person>() {
             public void callback(String url, Person person, AjaxStatus status) {
                 Gson gson = new Gson();
-                Log.d("Réponse", gson.toJson(person));
+                Log.d("Register", gson.toJson(person));
             }
         });
 
@@ -223,7 +239,7 @@ public class EchangeServeur{
         });
     }
 
-    public void async_menu(JSONObject json, AQuery aq){
+    public void async_menu(JSONObject json, AQuery aq, final ResultCallBack listener){
 
         String url = "http://92.243.14.22:1337/menu/";
         Log.d("params", json.toString());
@@ -231,13 +247,14 @@ public class EchangeServeur{
         aq.post(url, json, JSONObject.class, new AjaxCallback<JSONObject>() {
             public void callback(String url, JSONObject json, AjaxStatus status) {
                 Log.d("Réponse", "" + json);
+                listener.ResultCallBack();
             }
         });
 
     }
 
 
-    public void async_list_menu(AQuery aq){
+    public void async_list_menu(AQuery aq, final ResultCallBack listener){
 
         String url = "http://92.243.14.22:1337/menu/";
 
@@ -248,9 +265,26 @@ public class EchangeServeur{
                 Gson gson = new Gson();
                 menu = gson.fromJson(json.toString(), new TypeToken<ArrayList<Menu>>() {
                 }.getType());
-                Log.d("Menu 1", menu.get(menu.size()-1).id);
-                Log.d("Menu 1", menu.get(menu.size()-1).price+"");
-                Log.d("Product 1", menu.get(menu.size()-1).items.toString());
+                Log.d("Menu 1", menu.get(menu.size() - 1).id);
+                Log.d("Menu 1", menu.get(menu.size() - 1).price + "");
+                Log.d("Product 1", menu.get(menu.size() - 1).items.toString());
+                listener.ResultCallBack();
+            }
+        });
+
+    }
+
+    public void async_register_cooker(Map<String, Object> params, AQuery aq){
+
+        GsonTransformer t = new GsonTransformer();
+        String url = "http://92.243.14.22:1337/cooker/";
+
+        aq.transformer(t).ajax(url, params, Cooker.class, new AjaxCallback<Cooker>() {
+            public void callback(String url, Cooker cooker, AjaxStatus status) {
+                Gson gson = new Gson();
+                Log.d("Cooker", gson.toJson(cooker));
+                cooker.id = "56926330e0cac4380e759bd9";
+                Commande.getInstance().setCooker(cooker);
             }
         });
 
@@ -266,6 +300,10 @@ public class EchangeServeur{
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public List<Menu> getMenu() {
+        return menu;
     }
 
 }

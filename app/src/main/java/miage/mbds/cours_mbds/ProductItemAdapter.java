@@ -63,7 +63,7 @@ public class ProductItemAdapter extends BaseAdapter {
         }
         final EchangeServeur.Product product = products.get(position);
         viewHolder.name.setText(product.name);
-        viewHolder.price.setText(String.valueOf(product.price));
+        viewHolder.price.setText(String.valueOf(product.price)+"€");
         viewHolder.ajouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

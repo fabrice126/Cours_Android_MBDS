@@ -3,4 +3,5 @@
     <string name="cooker_name">Jauvat Linares</string>
     <string name="cooker_email">test@test.fr</string>
     <string name="api_key">AIzaSyAu9QBtF474YzVDU22dFAU6zL2NI4xUeMk</string>
+    <string name="gcm_defaultSenderId">319543281250</string>
 </resources>

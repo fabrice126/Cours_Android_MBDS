@@ -2,7 +2,6 @@ package miage.mbds.cours_mbds;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,10 +20,9 @@ public class DetailProductActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final EchangeServeur.Product product = bundle.getParcelable("miage.mbds.cours_mbds.EchangeServeur.Product");
 
-        Log.d("impossible", "ca marche pas"+product.name);
-
         TextView name= (TextView)this.findViewById(R.id.name);
         name.setText(product.name);
+        setTitle(product.name);
         TextView description= (TextView)this.findViewById(R.id.description);
         description.setText(product.description);
         ImageView image= (ImageView)this.findViewById(R.id.image);
@@ -33,13 +31,13 @@ public class DetailProductActivity extends AppCompatActivity {
         aq.id(image).image(product.picture);
 
         TextView price= (TextView)this.findViewById(R.id.price);
-        price.setText(String.valueOf(product.price));
+        price.setText(String.valueOf(product.price)+"€");
         TextView calories= (TextView)this.findViewById(R.id.calories);
-        calories.setText(String.valueOf(product.calories));
+        calories.setText(String.valueOf(product.calories)+" calories");
         TextView type= (TextView)this.findViewById(R.id.type);
         type.setText(product.type);
         TextView discount= (TextView)this.findViewById(R.id.discount);
-        discount.setText(String.valueOf(product.discount));
+        discount.setText("-"+String.valueOf(product.discount)+"%");
         Button ajouter= (Button) this.findViewById(R.id.addProduct);
         ajouter.setOnClickListener(new View.OnClickListener() {
             @Override

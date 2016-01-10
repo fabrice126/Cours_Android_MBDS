@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,8 +59,9 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
+        setTitle("Liste des produits");
         aq = new AQuery(this);
-        e = new EchangeServeur();
+        e = EchangeServeur.getInstance();
         e.async_list_product(aq, this);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -68,7 +70,8 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -76,7 +79,8 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
         mViewPager.setOffscreenPageLimit(5);
 
@@ -88,6 +92,14 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), CommandeActivity.class));
+            }
+        });
+
+        FloatingActionButton fabcurrent = (FloatingActionButton) findViewById(R.id.fabcurrent);
+        fabcurrent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), CommandeCurrentActivity.class));
             }
         });
 
@@ -117,22 +129,33 @@ public class ProductActivity extends AppCompatActivity implements ResultCallBack
 
     @Override
     public void ResultCallBack() {
-        for(int i = 0; i< e.getProducts().size(); i++) {
-            if(e.getProducts().get(i).type.equals("Entrée")) {
-                products_entree.add(e.getProducts().get(i));
-            }
-            else if(e.getProducts().get(i).type.equals("Plat ")) {
-                products_plat.add(e.getProducts().get(i));
-            }
-            else if(e.getProducts().get(i).type.equals("Dessert")) {
-                products_dessert.add(e.getProducts().get(i));
-            }
-            else if(e.getProducts().get(i).type.equals("Appéritif")) {
-                products_apperitif.add(e.getProducts().get(i));
+        for(int i = 0; i< e.getProducts().size()-1; i++) {
+            if(e.getProducts().get(i).type != null){
+                if(e.getProducts().get(i).type.equals("Entrée")) {
+                    products_entree.add(e.getProducts().get(i));
+                }
+                else if(e.getProducts().get(i).type.equals("Plat ")) {
+                    products_plat.add(e.getProducts().get(i));
+                }
+                else if(e.getProducts().get(i).type.equals("Dessert")) {
+                    products_dessert.add(e.getProducts().get(i));
+                }
+                else if(e.getProducts().get(i).type.equals("Appéritif")) {
+                    products_apperitif.add(e.getProducts().get(i));
+                }
             }
         }
-        EntreeFragment fragment = (EntreeFragment)getSupportFragmentManager().getFragments().get(0);
-        fragment.create_list(this, products_entree);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            int cat = bundle.getInt("categorie");
+            Log.d("CAT",""+cat);
+            updateList(cat);
+            mViewPager.setCurrentItem(cat);
+        }
+        else {
+            updateList(0);
+        }
     }
 
     @Override
